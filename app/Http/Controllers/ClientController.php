@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\PermissionEnum;
 use App\Http\Requests\StoreClientRequest;
 use App\Http\Requests\UpdateClientRequest;
 use App\Models\Client;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Gate;
 
 class ClientController extends Controller
 {
@@ -13,7 +16,7 @@ class ClientController extends Controller
      */
     public function index()
     {
-        $clients = Client::paginate(perPage:20);
+        $clients = Client::paginate(20);
 
         return view('clients.index', compact('clients'));
     }
@@ -29,7 +32,7 @@ class ClientController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreClientRequest $request)
+    public function store(StoreClientRequest $request): RedirectResponse
     {
         Client::create($request->validated());
 
@@ -67,6 +70,8 @@ class ClientController extends Controller
      */
     public function destroy(Client $client)
     {
+        Gate::authorize(PermissionEnum::DELETE_CLIENTS->value);
+
         $client->delete();
 
         return redirect()->route('clients.index');

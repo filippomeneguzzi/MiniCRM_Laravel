@@ -18,7 +18,8 @@
                                 <span class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Company</span>
                             </th>
                             <th class="px-6 py-3 bg-gray-50 text-left">
-                                <span class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">VAT</span>
+                                <span
+                                        class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">VAT</span>
                             </th>
                             <th class="px-6 py-3 bg-gray-50 text-left">
                                 <span class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Address</span>
@@ -42,15 +43,17 @@
                                 </td>
                                 <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
                                     <a href="{{ route('clients.edit', $client) }}" class="underline">Edit</a>
-                                    |
-                                    <form method="POST"
-                                          class="inline-block"
-                                          action="{{ route('clients.destroy', $client) }}"
-                                          onsubmit="return confirm('Are you sure?')">
-                                        @method('DELETE')
-                                        @csrf
-                                        <button type="submit" class="text-red-500 underline">Delete</button>
-                                    </form>
+                                    @can(\App\Enums\PermissionEnum::DELETE_CLIENTS->value)
+                                        |
+                                        <form action="{{ route('clients.destroy', $client) }}"
+                                              method="POST"
+                                              onsubmit="return confirm('Are you sure?');"
+                                              class="inline-block">
+                                            @method('DELETE')
+                                            @csrf
+                                            <button type="submit" class="text-red-500 underline">Delete</button>
+                                        </form>
+                                    @endcan
                                 </td>
                             </tr>
                         @endforeach
@@ -65,4 +68,3 @@
         </div>
     </div>
 </x-app-layout>
-
