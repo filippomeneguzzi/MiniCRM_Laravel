@@ -70,8 +70,8 @@ class ClientController extends Controller
      */
     public function destroy(Client $client)
     {
-        Gate::authorize(PermissionEnum::DELETE_CLIENTS->value);
-
+        /* Gate::authorize(PermissionEnum::DELETE_CLIENTS->value);
+ */
         $client->delete();
 
         return redirect()->route('clients.index');

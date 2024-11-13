@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enums\RoleEnum as EnumsRoleEnum;
 use App\Models\User;
 use App\RoleEnum;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -20,6 +21,6 @@ class UserSeeder extends Seeder
             'last_name' => 'Admin',
             'email' =>'admin@admin.com',
             'password' => 'secret'
-        ])->syncRoles([RoleEnum::ADMIN]);
+        ])->syncRoles([EnumsRoleEnum::ADMIN]);
     }
 }
