@@ -78,7 +78,9 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
-        /* Gate::authorize(PermissionEnum::DELETE_PROJECTS->value); */
+        Gate::authorize(PermissionEnum::DELETE_PROJECTS->value);
+
+        $client->projects()->delete();
 
         $project->delete();
 
